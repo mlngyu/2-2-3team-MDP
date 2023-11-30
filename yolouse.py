@@ -1,6 +1,9 @@
 import cv2
 import torch
 
+def get_objectnum():
+    return objectnumber
+
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='C:/Users/user/Downloads/best.pt', force_reload=True)
 cap = cv2.VideoCapture(0)
 
