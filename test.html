@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./mmmbmm.css" (type="text/css")> -->
+    <!-- <script src="./script.js"></script> -->
+    <title>Latest Test Value</title>
+    
+</head>
+<body>
+
+    <div class="pie-chart pie-chart1">
+        
+    </div>
+
+<style>
+    .pie-chart {
+        position: relative;
+        display:inline-block;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+    span.center{
+        background: rgb(255, 255, 255);
+        display : block;
+        position: absolute;
+        top:50%; left:50%;
+        width:100px; height:100px;
+        border-radius: 50%;
+        text-align:center; 
+        line-height: 100px;
+        font-size:30px;
+        transform: translate(-50%, -50%);
+    }
+    .pie-chart1 {
+        display:inline-block;
+        width: 200px;
+        height: 200px;
+        background: conic-gradient(#ffffff 0% 100%);
+        border-radius: 50%;
+        }
+
+</style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        var qweqwe = 0;
+        var qweqwe2;
+        var pieChartElement = document.querySelector('.pie-chart1');
+        // if (pieChartElement) {
+        //     pieChartElement.innerHTML = '<span class="center">' + qweqwe + '% / 4</span>';
+        // }
+
+        function draw(um, max, classname, colorname){
+            var i=um;
+            var func1 = setInterval(function(){
+            if(i<=max){
+                color1(i,classname,colorname);
+                i++;
+            } else{
+                clearInterval(func1);
+            }
+            },10);
+        }
+        function draw2(jun, sic, classname, colorname){
+            var i=jun;
+            var func1 = setInterval(function(){
+            if(i>=sic){
+                color1(i,classname,colorname);
+                i--;
+            } else{
+                clearInterval(func1);
+            }
+            },10);
+        }
+        function color1(i, classname,colorname){
+            $(classname).css({
+                "background":"conic-gradient("+colorname+" 0% "+i+"%, #eeeeee "+i+"% 100%)"
+            });
+        }
+
+        async function test22(){
+            const result = await $.ajax({
+                url: "db.php",
+                method: "GET",
+                dataType: "json"
+            });
+            qweqwe = result * 25;
+            document.body.innerHTML += '<div class="pie-chart pie-chart1"><span class="center">' + qweqwe + '% / 4</span></div>';
+            draw(qweqwe, '.pie-chart1', '#8b22ff');
+        }
+        
+
+
+        
+        // window.onload = async function(){
+        //     const result = await $.ajax({
+        //         url: "db.php",
+        //         method: "GET",
+        //         dataType: "json"
+        //     });
+        //     qweqwe = result;
+        //     document.body.innerHTML += '<div class="pie-chart pie-chart1"><span class="center">' + qweqwe + '% / 4</span></div>';
+        //     draw(qweqwe, '.pie-chart1', '#8b22ff');
+        // };
+        let timer = setTimeout(async function tick () {
+            const result = await $.ajax({
+                url: "db.php",
+                method: "GET",
+                dataType: "json"
+            });
+            qweqwe2 = qweqwe
+            qweqwe = result * 25;
+            if(qweqwe2 != qweqwe){
+                pieChartElement.innerHTML = '<span class="center">' + qweqwe/25 + ' / 4</span>';
+                if(qweqwe2 < qweqwe){
+                    draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
+                }
+                else{
+                    draw2(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
+                }
+                }
+            let timer = setTimeout(tick, 1000)
+        }, 1000);
+
+
+        
+
+    </script>
+
+</body>
+</html>
