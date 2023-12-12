@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재적 등록</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h2>재적 등록</h2>
+    <form id="insertForm">
+        <label for="name">Number:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="email">reason:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <button type="button" onclick="insertData()">Insert Data</button>
+
+        <button type="button" onclick="deleteData()">Delete Data</button>
+    </form>
+
+    <script>
+        function insertData() {
+            var name = $("#name").val();
+            var email = $("#email").val();
+
+            $.ajax({
+                type: "POST",
+                url: "db3.php",
+                data: {
+                    name: name,
+                    email: email
+                },
+                success: function (response) {
+                    alert(response); // Display response from the PHP script
+                }
+            });
+        }
+
+        function deleteData() {
+            var name = $("#name").val();
+            var email = $("#email").val();
+
+            $.ajax({
+                type: "POST",
+                url: "db4.php",
+                data: {
+                    name: name,
+                    email: email
+                },
+                success: function (response) {
+                    alert(response); // Display response from the PHP script
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
