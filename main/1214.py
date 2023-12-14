@@ -8,7 +8,6 @@ import mysql.connector
 # Define a global variable for object number
 objectnumber = 0
 frame_queue = queue.Queue()
-
 def get_frame():
     ret, frame = cap.read()
     return ret,frame
@@ -20,7 +19,7 @@ def process_frames():
     ret, frame = get_frame()
     results = model(frame)
     confidences = results.xyxy[0][:, 4]
-    threshold = 0.7
+    threshold = 0.6
     high_confidence_indices = confidences > threshold
     objectnumber = int(len(results.xyxy[0][high_confidence_indices]))
     insert_query = "INSERT INTO test VALUES (%s,0)"
