@@ -3,26 +3,33 @@ import os
 import cv2
 import time
 
+MAX_RETRIES = 3
+
 def upload_folder_to_ftp(local_folder, server_address, username, password, remote_folder):
-    try:
-        # Connect to the FTP server
-        ftp = FTP(server_address)
-        ftp.login(username, password)
+    retries = 0
+    while retries < MAX_RETRIES:
+        try:
+            # Connect to the FTP server
+            ftp = FTP(server_address)
+            ftp.login(username, password)
 
-        # Change to the desired remote directory
-        ftp.cwd(remote_folder)
+            # Change to the desired remote directory
+            ftp.cwd(remote_folder)
 
-        # Upload each file in the local folder
-        local_filepath = os.path.join(local_folder).replace("\\", "/")
-        with open(file = local_filepath, mode = 'rb') as file:
-            ftp.storbinary(f'STOR a.jpg', file)
+            # Upload each file in the local folder
+            local_filepath = os.path.join(local_folder).replace("\\", "/")
+            with open(file = local_filepath, mode = 'rb') as file:
+                ftp.storbinary(f'STOR a.jpg', file)
 
-        # Close the FTP connection
-        ftp.quit()
-        print("Upload successful.")
-    
-    except Exception as e:
-        print(f"Error: {e}")
+            # Close the FTP connection
+            ftp.quit()
+            print("Upload successful.")
+            break
+        
+        except Exception as e:
+            retries += 1
+            print(f"Error: {e}")
+            print(f"Retrying... ({retries}/{MAX_RETRIES})")
 
 # Example usage
 local_folder_path = 'C:/Users/user/Desktop/mdp html/camera.jpg'
