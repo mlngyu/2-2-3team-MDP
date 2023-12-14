@@ -161,15 +161,18 @@
                 dataType: "json"
             });
             var rrow;
-            var akdgkf = '재적';
+            var dkslwlsWK = '재적';
+            var dltmxjdprm = 0;
             if(result2=='nooo'){
-                akdgkf = '재적';
+                dkslwlsWK = '재적';
+                var dltmxjdprm = 0;
             }
             else{
                 for(rrow=0;rrow<result2.length;rrow++){
-                    akdgkf = akdgkf + '<br>' + result2[rrow]["number"] +' '+result2[rrow]['why']+ '</br>';
+                    dkslwlsWK = dkslwlsWK + '<br>' + result2[rrow]["number"] +' '+result2[rrow]['why']+ '</br>';
+                    dltmxjdprm++;
             }}
-            textBox.innerHTML = akdgkf;
+            textBox.innerHTML = dkslwlsWK;
 
             const result = await $.ajax({
                 url: "db.php",
@@ -177,7 +180,7 @@
                 dataType: "json"
             });
             
-            var xhRlakflttn = 8;
+            var xhRlakflttn = 8-dltmxjdprm;
             var eocndtntwk = 100/xhRlakflttn;
             
             qweqwe2 = qweqwe;
@@ -185,7 +188,7 @@
             qweqwe4 = qweqwe3;
             qweqwe3 = result[0]["noise"];
             if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3){
-                pieChartElement.innerHTML = '<span class="center">' + result[0]["test"] + ' / ' + xhRlakflttn +'</span>';
+                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + result[0]["test"] + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
                 if(qweqwe2 < qweqwe || qweqwe4 < qweqwe3){
                     draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
                     draw4(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
