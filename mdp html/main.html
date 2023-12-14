@@ -87,6 +87,8 @@
     <script>
         var qweqwe = 0;
         var qweqwe2;
+        var qweqwe3 = 0;
+        var qweqwe4;
         var pieChartElement = document.querySelector('.pie-chart1');
         var squChartElement = document.querySelector('.squ-chart1');
         var textBox = document.querySelector('.text-box');
@@ -159,35 +161,41 @@
                 dataType: "json"
             });
             var rrow;
-            var akdgkf = '재적';
+            var dkslwlsWK = '재적';
+            var dltmxjdprm = 0;
             if(result2=='nooo'){
-                akdgkf = '재적';
+                dkslwlsWK = '재적';
+                var dltmxjdprm = 0;
             }
             else{
                 for(rrow=0;rrow<result2.length;rrow++){
-                    akdgkf = akdgkf + '<br>' + result2[rrow]["number"] +' '+result2[rrow]['why']+ '</br>';
+                    dkslwlsWK = dkslwlsWK + '<br>' + result2[rrow]["number"] +' '+result2[rrow]['why']+ '</br>';
+                    dltmxjdprm++;
             }}
-            textBox.innerHTML = akdgkf;
+            textBox.innerHTML = dkslwlsWK;
 
             const result = await $.ajax({
                 url: "db.php",
                 method: "GET",
                 dataType: "json"
             });
-            var xhRlakflttn = 8;
+            
+            var xhRlakflttn = 8-dltmxjdprm;
             var eocndtntwk = 100/xhRlakflttn;
             
-            qweqwe2 = qweqwe
-            qweqwe = result*eocndtntwk;
-            if(qweqwe2 != qweqwe){
-                pieChartElement.innerHTML = '<span class="center">' + result + ' / ' + xhRlakflttn +'</span>';
-                if(qweqwe2 < qweqwe){
+            qweqwe2 = qweqwe;
+            qweqwe = result[0]["test"]*eocndtntwk;
+            qweqwe4 = qweqwe3;
+            qweqwe3 = result[0]["noise"];
+            if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3){
+                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + result[0]["test"] + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
+                if(qweqwe2 < qweqwe || qweqwe4 < qweqwe3){
                     draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
-                    draw4(qweqwe2,qweqwe, '.squ-chart1', '#8b22ff');
+                    draw4(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
                 }
                 else{
                     draw2(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
-                    draw3(qweqwe2,qweqwe, '.squ-chart1', '#8b22ff');
+                    draw3(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
                 }
                 }
             let timer = setTimeout(tick, 1000)
