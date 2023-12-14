@@ -1,7 +1,6 @@
 import cv2
 import torch
 import threading
-from mdp_send_db import add_data_to_mariadb
 import queue
 import mysql.connector
 
