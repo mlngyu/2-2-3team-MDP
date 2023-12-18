@@ -186,11 +186,13 @@
             },10);
         }
         function color1(i, classname,colorname){
+            i += 1
             $(classname).css({
                 "background":"conic-gradient("+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
             });
         }
         function color2(i, classname,colorname){
+            i += 1
             var red = Math.floor((i / 100) * 219).toString(16).padStart(2, '0');
             var green = Math.floor((219 - (i / 100) * 219)).toString(16).padStart(2, '0');
             colorname = "#"+red+green+"50";
