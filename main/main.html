@@ -195,7 +195,8 @@
             i += 1
             var red = Math.floor((i / 100) * 219).toString(16).padStart(2, '0');
             var green = Math.floor((219 - (i / 100) * 219)).toString(16).padStart(2, '0');
-            colorname = "#"+red+green+"50";
+            var blue = Math.floor(220-(Math.abs(110 - Math.floor((i / 100) * 219))+Math.abs(110 - Math.floor((219 - (i / 100) * 219))))).toString(16).padStart(2,'0');
+            colorname = "#"+red+green+blue;
             $(classname).css({
                 "background": "linear-gradient(to right, "+colorname+" "+i+"%, #dddddd "+i+"% 100%)"
             });
@@ -244,7 +245,7 @@
             qweqwe4 = qweqwe3;
             qweqwe3 = result[2]["noise"];
             if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3){
-                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + result[2]["test"] + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
+                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + qweqwe/eocndtntwk + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
                 if(qweqwe2 < qweqwe || qweqwe4 < qweqwe3){
                     draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
                     draw4(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
