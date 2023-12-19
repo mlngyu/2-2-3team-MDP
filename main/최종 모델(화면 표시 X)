@@ -5,6 +5,7 @@ import mysql.connector
 
 objectnumber = 0
 num = 0
+max = 8
 def get_frame():
     ret, frame = cap.read()
     frame = cv2.flip(frame,0)
@@ -20,10 +21,10 @@ def process_frames():
     threshold = 0.55
     high_confidence_indices = confidences > threshold
     objectnumber = int(len(results.xyxy[0][high_confidence_indices]))
-    insert_query = "INSERT INTO test VALUES (%s,0, %s)"
+    insert_query = "INSERT INTO test VALUES (%s,%s, %s, %s)"
     delete_query = "DELETE FROM test ORDER BY number ASC LIMIT 1;"
     cursor.execute(delete_query)
-    cursor.execute(insert_query, (str(objectnumber),str(num)))
+    cursor.execute(insert_query, (str(objectnumber),str(num),str(num),str(max)))
     num += 1
     connection.commit()
 
@@ -38,7 +39,7 @@ connection = mysql.connector.connect(
             database=database
         )
 cursor = connection.cursor()
-insert_query = "INSERT INTO test VALUES (0,0,0)"
+insert_query = "INSERT INTO test VALUES (0,0,0,0)"
 delete_query = "DELETE FROM test"
 cursor.execute(delete_query)
 cursor.execute(insert_query)
@@ -51,7 +52,6 @@ model = torch.hub.load('ultralytics/yolov5', 'custom', path='C:/Users/user/Downl
 cap = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
-
 
 while(1):
     processing_thread = threading.Thread(target=process_frames)
