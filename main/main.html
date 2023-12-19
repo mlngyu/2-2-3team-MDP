@@ -15,7 +15,7 @@
         font-size: 25px; line-height: 50%;">소음</p><div class="squ-chart squ-chart1"></div>
         </br>
     </div>
-    <div class="text-box">재적</div>
+    <div class="text-box">결원</div>
     </div>
 
 <style>
@@ -186,7 +186,9 @@
             },10);
         }
         function color1(i, classname,colorname){
-            i += 1
+            if(i==100){
+                i += 1
+            }
             $(classname).css({
                 "background":"conic-gradient("+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
             });
@@ -198,7 +200,7 @@
             var blue = Math.floor(220-(Math.abs(110 - Math.floor((i / 100) * 219))+Math.abs(110 - Math.floor((219 - (i / 100) * 219))))).toString(16).padStart(2,'0');
             colorname = "#"+red+green+blue;
             $(classname).css({
-                "background": "linear-gradient(to right, "+colorname+" "+i+"%, #dddddd "+i+"% 100%)"
+                "background": "linear-gradient(to right, "+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
             });
         }
 
@@ -210,10 +212,10 @@
                 dataType: "json"
             });
             var rrow;
-            var dkslwlsWK = '재적';
+            var dkslwlsWK = '결원';
             var dltmxjdprm = 0;
             if(result2=='nooo'){
-                dkslwlsWK = '재적';
+                dkslwlsWK = '결원';
                 var dltmxjdprm = 0;
             }
             else{
@@ -229,7 +231,7 @@
                 dataType: "json"
             });
             
-            var xhRlakflttn = 6-dltmxjdprm;
+            var xhRlakflttn = result[2]['max']-dltmxjdprm;
             var eocndtntwk = 100/xhRlakflttn;
             
             qweqwe2 = qweqwe;
