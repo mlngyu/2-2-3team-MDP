@@ -15,7 +15,7 @@
         font-size: 25px; line-height: 50%;">소음</p><div class="squ-chart squ-chart1"></div>
         </br>
     </div>
-    <div class="text-box">재적</div>
+    <div class="text-box">결원</div>
     </div>
 
 <style>
@@ -75,9 +75,57 @@
         display:inline-block;
         width: 500px;
         height: 60px;
+        background: linear-gradient(to right,#ffffff 0% 0%,#ffffff 0% 100%);
+        }
+    @media (max-width: 600px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        margin: 0 auto;
+    }
+    .rounded-rectangle {
+      width: 280px;
+      height: 550px;
+      background-color: #efefef;
+      position: relative;
+      border-radius: 30px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .pie-chart {
+        position: relative;
+        display:inline-block;
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+    .pie-chart1 {
+        display:inline-block;
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
+        background: conic-gradient(#ffffff 0% 100%);
+        border-radius: 50%;
+        }
+    .squ-chart {
+        position: relative;
+        display:inline-block;
+        width: 280px;
+        height: 60px;
+        margin: 0 auto;
+        transition: 0.3s;
+    }
+    .squ-chart1 {
+        display:inline-block;
+        width: 280px;
+        height: 60px;
+        margin: 0 auto;
         background: linear-gradient(to right,#ffffff 0% 1%,#ffffff 1% 100%);
         }
-
+    }
 
 </style>
 
@@ -138,20 +186,23 @@
             },10);
         }
         function color1(i, classname,colorname){
+            if(i==100){
+                i += 1
+            }
             $(classname).css({
                 "background":"conic-gradient("+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
             });
         }
         function color2(i, classname,colorname){
-            var padding = "00";
-            var red = (parseInt((i/100)*219)).toString(16).substr(-padding.length);
-            var green = (219 - parseInt((i/100)*219)).toString(16).substr(-padding.length);
-            colorname = "#"+red+green+"50";
+            i += 1
+            var red = Math.floor((i / 100) * 219).toString(16).padStart(2, '0');
+            var green = Math.floor((219 - (i / 100) * 219)).toString(16).padStart(2, '0');
+            var blue = Math.floor(220-(Math.abs(110 - Math.floor((i / 100) * 219))+Math.abs(110 - Math.floor((219 - (i / 100) * 219))))).toString(16).padStart(2,'0');
+            colorname = "#"+red+green+blue;
             $(classname).css({
                 "background": "linear-gradient(to right, "+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
             });
         }
-        
 
         let timer = setTimeout(async function tick () {
 
@@ -161,10 +212,10 @@
                 dataType: "json"
             });
             var rrow;
-            var dkslwlsWK = '재적';
+            var dkslwlsWK = '결원';
             var dltmxjdprm = 0;
             if(result2=='nooo'){
-                dkslwlsWK = '재적';
+                dkslwlsWK = '결원';
                 var dltmxjdprm = 0;
             }
             else{
@@ -180,15 +231,23 @@
                 dataType: "json"
             });
             
-            var xhRlakflttn = 8-dltmxjdprm;
+            var xhRlakflttn = result[2]['max']-dltmxjdprm;
             var eocndtntwk = 100/xhRlakflttn;
             
             qweqwe2 = qweqwe;
-            qweqwe = result[0]["test"]*eocndtntwk;
+            if(result[0]['test']==result[1]['test'] || result[0]['test']==result[2]['test']){
+                qweqwe = result[0]["test"]*eocndtntwk;
+            }
+            else if(result[1]['test']==result[2]['test']){
+                qweqwe = result[1]['test']*eocndtntwk;
+            }
+            else{
+                qweqwe = result[2]["test"]*eocndtntwk;
+            }
             qweqwe4 = qweqwe3;
-            qweqwe3 = result[0]["noise"];
+            qweqwe3 = result[2]["noise"];
             if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3){
-                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + result[0]["test"] + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
+                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + qweqwe/eocndtntwk + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
                 if(qweqwe2 < qweqwe || qweqwe4 < qweqwe3){
                     draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
                     draw4(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
@@ -199,10 +258,7 @@
                 }
                 }
             let timer = setTimeout(tick, 1000)
-        }, 1000);
-
-
-        
+        }, 1000);   
 
     </script>
 
