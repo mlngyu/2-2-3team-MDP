@@ -80,7 +80,7 @@ while(1):
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             print('q')
-            break  
+            break
     except queue.Empty:
         pass
 
