@@ -17,6 +17,8 @@
     </div>
     <div class="text-box">결원</div>
     </div>
+    <div style="position: absolute; right: 10px; bottom: 10px;"><a href="https://imminho.cafe24.com/NGGYU">재적 등록</a></div>
+
 
 <style>
     .text-box {
@@ -230,10 +232,19 @@
                 method: "GET",
                 dataType: "json"
             });
-            
+            var xhRlakflttn2 = xhRlakflttn
             var xhRlakflttn = result[2]['max']-dltmxjdprm;
             var eocndtntwk = 100/xhRlakflttn;
             
+            $('#postReturnMessage').hide();
+            const result3 = await $.ajax({
+                url: "db5.php",
+                type: "POST",
+                data: {
+                    afmax: xhRlakflttn,
+                }
+            });
+
             qweqwe2 = qweqwe;
             if(result[0]['test']==result[1]['test'] || result[0]['test']==result[2]['test']){
                 qweqwe = result[0]["test"]*eocndtntwk;
@@ -246,7 +257,7 @@
             }
             qweqwe4 = qweqwe3;
             qweqwe3 = result[2]["noise"];
-            if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3){
+            if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3 || xhRlakflttn != xhRlakflttn2){
                 pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + qweqwe/eocndtntwk + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
                 if(qweqwe2 < qweqwe || qweqwe4 < qweqwe3){
                     draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');

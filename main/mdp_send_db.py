@@ -20,9 +20,12 @@ def add_data_to_mariadb(host, user, password, database, data):
             # CREATE TABLE IF NOT EXISTS your_table (id INT AUTO_INCREMENT PRIMARY KEY, data_column VARCHAR(255));
 
             # Example SQL query to insert data into the table
-            insert_query = "INSERT INTO nucleof103 (temp) VALUES (%s)"
-
+            # insert_query = "INSERT INTO nucleof103 (temp) VALUES (%s)"
+            insert_query = "INSERT INTO test VALUES (%s,0)"
+            delete_query = "DELETE FROM test LIMIT 1"
+            cursor.execute(delete_query)
             cursor.execute(insert_query, (data,))
+            # cursor.execute(insert_query, ('3',))
 
             # Commit the changes to the database
             connection.commit()
