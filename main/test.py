@@ -1,25 +1,64 @@
-import mysql.connector
+import numpy as np
+import pandas as pd
 
-# Database credentials
-host = '183.111.138.176'
-user = 'imminho'
-password = 'mu3102!!'
-database = 'imminho'
+from torch import nn
 
-# Create a connection
-conn = mysql.connector.connect(host=host, user=user, password=password, database=database,port=3306)
+from PIL import Image
 
-# Create a cursor
-cursor = conn.cursor()
+from torchvision import models
+from torchvision import transforms
 
-# Your SQL queries go here
-insert_query = "INSERT INTO test VALUES (%s)"
-delete_query = "DELETE FROM test LIMIT 1"
-cursor.execute(delete_query)
-cursor.execute(insert_query, ('3',))
-conn.commit()
-# cursor.execute(insert_query, ('1',))
+class Dataset:
+    def __init__(self, path, domain):
+        self.dataset = pd.read_excel(path, sheet_name='main').to_numpy()
 
-# Close the cursor and connection
-cursor.close()
-conn.close()
+        transform_dict = {
+            'train': transforms.Compose(
+                [
+                    transforms.Resize(224),
+                    transforms.RandomCrop(224),
+                    transforms.ToTensor(),
+                    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+                ]
+            ),
+            'test': transforms.Compose(
+                [
+                    transforms.Resize(224),
+                    transforms.CenterCrop(224),
+                    transforms.ToTensor(),
+                    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+                ]
+            )
+        }
+
+        self.domain = domain
+        self.transform = transform_dict[domain]
+
+    def __getitem__(self, i):
+        path, flame, smoke = self.dataset[i]
+
+        image = Image.open(path).convert('RGB')
+        image = self.transform(image)
+
+        label = np.asarray([flame, smoke], dtype=np.float32)
+
+        if self.domain == 'train':
+            return image, label
+        else:
+            return path, image
+    
+    def __len__(self):
+        return len(self.dataset)
+
+class Network(nn.Module):
+    def __init__(self, num_classes):
+        super().__init__()
+
+        self.backbone = models.detection.ssdlite320_mobilenet_v3_large(num_classes=1,
+        weights=None,
+        weights_backbone=None)
+        self.backbone.classifier = nn.Linear(in_features=1280, out_features=num_classes)
+
+    def forward(self, images):
+        return self.backbone(images)
+    

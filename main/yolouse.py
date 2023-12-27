@@ -3,14 +3,17 @@ import torch
 import threading
 import mysql.connector
 import queue
+import cv2
 
 objectnumber = 0
 frame_queue = queue.Queue()
 num = 0
-max = 6
+max = 4
+
 def get_frame():
     ret, frame = cap.read()
-    
+    # frame = cv2.flip(frame,0)
+    # frame = cv2.resize(frame,dsize=(640,640))
     return ret,frame
 
 def process_frames():
@@ -25,12 +28,12 @@ def process_frames():
     high_confidence_indices = confidences > threshold
     boxes = results.xyxy[0][high_confidence_indices].cpu().numpy()
     objectnumber = int(len(results.xyxy[0][high_confidence_indices]))
-    insert_query = "INSERT INTO test VALUES (%s,%s, %s, %s)"
+    insert_query = "INSERT INTO test VALUES (%s,%s, %s)"
     delete_query = "DELETE FROM test ORDER BY number ASC LIMIT 1;"
-    cursor.execute(delete_query)
-    cursor.execute(insert_query, (str(objectnumber),str(num),str(num),str(max)))
+    # cursor.execute(delete_query)
+    # cursor.execute(insert_query,(str(objectnumber),str(num),str(max)))
     num += 1
-    connection.commit()
+    # connection.commit()
     color = (0, 255, 0)
     thickness = 2
 
@@ -55,19 +58,21 @@ connection = mysql.connector.connect(
             database=database
         )
 cursor = connection.cursor()
-insert_query = "INSERT INTO test VALUES (0,0,0,0)"
+insert_query = "INSERT INTO test VALUES (0,0,0)"
 delete_query = "DELETE FROM test"
-cursor.execute(delete_query)
-cursor.execute(insert_query)
-cursor.execute(insert_query)
-cursor.execute(insert_query)
-connection.commit()
+# cursor.execute(delete_query)
+# cursor.execute(insert_query)
+# cursor.execute(insert_query)
+# cursor.execute(insert_query)
+# connection.commit()
 
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='C:/Users/user/Downloads/best5.pt', force_reload=True)
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='C:/Users/user/Downloads/best8.pt', force_reload=True)
+# model = torch.hub.load('ultralytics/yolov5', 'custom', path='C:/Users/user/Downloads/best5-int8.tflite', force_reload=True)
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
+# cap.set(cv2.CAP_PROP_FPS,1)
 
 while(1):
     processing_thread = threading.Thread(target=process_frames)
