@@ -11,10 +11,10 @@
     <div class="container">
     <div class="rounded-rectangle">
         <div class="pie-chart pie-chart1"></div>
-        <br><br></br><br></br><br></br><p style="color: #333;
+        <!-- <br><br></br><br></br><br></br><p style="color: #333;
         font-size: 25px; line-height: 50%;">소음</p><div class="squ-chart squ-chart1"></div>
-        </br>
-    </div>
+        </br> -->
+       </div>
     <div class="text-box">결원</div>
     </div>
     <div style="position: absolute; right: 10px; bottom: 10px;"><a href="https://imminho.cafe24.com/NGGYU">재적 등록</a></div>
@@ -77,7 +77,7 @@
         display:inline-block;
         width: 500px;
         height: 60px;
-        background: linear-gradient(to right,#ffffff 0% 1%,#ffffff 1% 100%);
+        background: linear-gradient(to right,#ffffff 0% 0%,#ffffff 0% 100%);
         }
     @media (max-width: 600px) {
     .container {
@@ -135,16 +135,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
-        var value1 = 0;
-        var value2;
-        var noisevalue1 = 0;
-        var noisevalue2;
+        var qweqwe = 0;
+        var qweqwe2;
+        // var qweqwe3 = 0;
+        // var qweqwe4;
         var pieChartElement = document.querySelector('.pie-chart1');
-        var squChartElement = document.querySelector('.squ-chart1');
+        // var squChartElement = document.querySelector('.squ-chart1');
         var textBox = document.querySelector('.text-box');
 
-        function draw(start, max, classname, colorname){
-            var i=start;
+        function draw(um, max, classname, colorname){
+            var i=um;
             var func1 = setInterval(function(){
             if(i<=max){
                 color1(i,classname,colorname);
@@ -154,10 +154,10 @@
             }
             },10);
         }
-        function draw2(start, max, classname, colorname){
-            var i=start;
+        function draw2(jun, sic, classname, colorname){
+            var i=jun;
             var func1 = setInterval(function(){
-            if(i>=max){
+            if(i>=sic){
                 color1(i,classname,colorname);
                 i--;
             } else{
@@ -165,28 +165,28 @@
             }
             },10);
         }
-        function draw4(start, max, classname, colorname){
-            var i=start;
-            var func1 = setInterval(function(){
-            if(i<=max){
-                color2(i,classname,colorname);
-                i++;
-            } else{
-                clearInterval(func1);
-            }
-            },10);
-        }
-        function draw3(start, max, classname, colorname){
-            var i=start;
-            var func1 = setInterval(function(){
-            if(i>=max){
-                color2(i,classname,colorname);
-                i--;
-            } else{
-                clearInterval(func1);
-            }
-            },10);
-        }
+        // function draw4(jun, sic, classname, colorname){
+        //     var i=jun;
+        //     var func1 = setInterval(function(){
+        //     if(i<=sic){
+        //         color2(i,classname,colorname);
+        //         i++;
+        //     } else{
+        //         clearInterval(func1);
+        //     }
+        //     },10);
+        // }
+        // function draw3(jun, sic, classname, colorname){
+        //     var i=jun;
+        //     var func1 = setInterval(function(){
+        //     if(i>=sic){
+        //         color2(i,classname,colorname);
+        //         i--;
+        //     } else{
+        //         clearInterval(func1);
+        //     }
+        //     },10);
+        // }
         function color1(i, classname,colorname){
             if(i==100){
                 i += 1
@@ -195,15 +195,16 @@
                 "background":"conic-gradient("+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
             });
         }
-        function color2(i, classname,colorname){
-            var red = Math.floor((i / 100) * 219).toString(16).padStart(2, '0');
-            var green = Math.floor((219 - (i / 100) * 219)).toString(16).padStart(2, '0');
-            var blue = Math.floor(220-(Math.abs(110 - Math.floor((i / 100) * 219))+Math.abs(110 - Math.floor((219 - (i / 100) * 219))))).toString(16).padStart(2,'0');
-            colorname = "#"+red+green+blue;
-            $(classname).css({
-                "background": "linear-gradient(to right, "+colorname+" "+i+"%, #dddddd "+i+"% 100%)"
-            });
-        }
+        // function color2(i, classname,colorname){
+        //     i += 1
+        //     var red = Math.floor((i / 100) * 219).toString(16).padStart(2, '0');
+        //     var green = Math.floor((219 - (i / 100) * 219)).toString(16).padStart(2, '0');
+        //     var blue = Math.floor(220-(Math.abs(110 - Math.floor((i / 100) * 219))+Math.abs(110 - Math.floor((219 - (i / 100) * 219))))).toString(16).padStart(2,'0');
+        //     colorname = "#"+red+green+blue;
+        //     $(classname).css({
+        //         "background": "linear-gradient(to right, "+colorname+" 0% "+i+"%, #dddddd "+i+"% 100%)"
+        //     });
+        // }
 
         let timer = setTimeout(async function tick () {
 
@@ -213,50 +214,59 @@
                 dataType: "json"
             });
             var rrow;
-            var people_list = '결원';
-            var people_list_count = 0;
+            var dkslwlsWK = '결원';
+            var dltmxjdprm = 0;
             if(result2=='nooo'){
-                people_list = '결원';
-                var people_list_count = 0;
+                dkslwlsWK = '결원';
+                var dltmxjdprm = 0;
             }
             else{
                 for(rrow=0;rrow<result2.length;rrow++){
-                    people_list = people_list + '<br>' + result2[rrow]["number"] +' '+result2[rrow]['why']+ '</br>';
-                    people_list_count++;
+                    dkslwlsWK = dkslwlsWK + '<br>' + result2[rrow]["number"] +' '+result2[rrow]['why']+ '</br>';
+                    dltmxjdprm++;
             }}
-            textBox.innerHTML = people_list;
+            textBox.innerHTML = dkslwlsWK;
 
             const result = await $.ajax({
                 url: "db.php",
                 method: "GET",
                 dataType: "json"
             });
-            var rabitcount2 = rabitcount
-            var rabitcount = result[2]['max']-people_list_count;
-            var percent_per_one = 100/rabitcount;
+            var xhRlakflttn2 = xhRlakflttn
+            var xhRlakflttn = result[2]['max']-dltmxjdprm;
+            var eocndtntwk = 100/xhRlakflttn;
             
             $('#postReturnMessage').hide();
             const result3 = await $.ajax({
                 url: "db5.php",
                 type: "POST",
                 data: {
-                    afmax: rabitcount,
+                    afmax: xhRlakflttn,
                 }
             });
 
-            value2 = value1;
-            value1 = result[2]["test"]*percent_per_one;
-            noisevalue2 = noisevalue1;
-            noisevalue1 = result[2]["noise"];
-            if(value2 != value1 || noisevalue2 != noisevalue1 || rabitcount != rabitcount2){
-                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + value1/percent_per_one + ' / ' + rabitcount +'<br>'+value1.toFixed()+'%</span>';
-                if(value2 < value1 || noisevalue2 < noisevalue1){
-                    draw(value2,value1, '.pie-chart1', '#8b22ff');
-                    draw4(noisevalue2,noisevalue1, '.squ-chart1', '#8b22ff');
+            qweqwe2 = qweqwe;
+            if(result[0]['test']==result[1]['test'] || result[0]['test']==result[2]['test']){
+                qweqwe = result[0]["test"]*eocndtntwk;
+            }
+            else if(result[1]['test']==result[2]['test']){
+                qweqwe = result[1]['test']*eocndtntwk;
+            }
+            else{
+                qweqwe = result[2]["test"]*eocndtntwk;
+            }
+            // qweqwe4 = qweqwe3;
+            // qweqwe3 = result[2]["noise"];
+            // if(qweqwe2 != qweqwe || qweqwe4 != qweqwe3 || xhRlakflttn != xhRlakflttn2){
+            if(qweqwe2 != qweqwe || xhRlakflttn != xhRLakflttn2){
+                pieChartElement.innerHTML = '<span class="center" style=line-height:180%>' + qweqwe/eocndtntwk + ' / ' + xhRlakflttn +'<br>'+qweqwe.toFixed()+'%</span>';
+                if(qweqwe2 < qweqwe || qweqwe4 < qweqwe3){
+                    draw(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
+                    // draw4(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
                 }
                 else{
-                    draw2(value2,value1, '.pie-chart1', '#8b22ff');
-                    draw3(noisevalue2,noisevalue1, '.squ-chart1', '#8b22ff');
+                    draw2(qweqwe2,qweqwe, '.pie-chart1', '#8b22ff');
+                    // draw3(qweqwe4,qweqwe3, '.squ-chart1', '#8b22ff');
                 }
                 }
             let timer = setTimeout(tick, 1000)
